@@ -1,0 +1,65 @@
+
+spring:
+  profiles:
+    active: dev
+camel:
+  springboot:
+    shutdown-timeout: 2
+
+---
+spring:
+  profiles: mock
+
+startRoute: timer:hello?period=10s
+#fromRoute: file:data/input?delete=true&readLock=none
+toRoute: mock:output
+
+message: DEV Environnement
+
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5431/player1
+    username: player2
+    password: player2
+
+
+startRoute: timer:hello?period=10s
+fromRoute: file:data/input?delete=true&readLock=none
+toRoute: file:data/output
+
+message: DEV Environnement
+
+---
+spring:
+  profiles: stage
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5431/localDB
+    username: player2
+    password: player2
+
+startRoute: timer:hello?period=10s
+fromRoute: file:data/input?delete=true&readLock=none
+toRoute: file:data/output
+
+message: STAGE Environnement
+
+---
+spring:
+  profiles: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5431/localDB
+    username: player2
+    password: player2
+
+startRoute: timer:hello?period=10s
+fromRoute: file:data/input?delete=true&readLock=none
+toRoute: file:data/output
+
+message: PROD Environnement
+
+
