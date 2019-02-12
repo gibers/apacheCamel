@@ -10,11 +10,11 @@ camel:
 spring:
   profiles: mock
 
-startRoute: timer:hello?period=10s
-#fromRoute: file:data/input?delete=true&readLock=none
+startRoute: direct:input
+fromRoute: file:data/input?delete=true&readLock=none
 toRoute: mock:output
 
-message: DEV Environnement
+message: MOCK Environnement
 
 ---
 spring:

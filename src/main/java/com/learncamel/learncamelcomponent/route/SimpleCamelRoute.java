@@ -36,12 +36,13 @@ public class SimpleCamelRoute extends RouteBuilder {
                         .log("mock nv flow and the body is ${body}")
                 .end()
                 .to("{{toRoute}}")
-                .unmarshal(bindy)
-                .log("the unmarshal object is ${body}")
-                .split(body())
-                    .log("Record is ${body}")
-                .end();
+//                .unmarshal(bindy)
+//                .log("the unmarshal object is ${body}")
+//                .split(body())
+//                    .log("Record is ${body}")
+//                .end();
 
+        ;
         log.info("ending the Camel Route");
 
     }
