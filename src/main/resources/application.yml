@@ -1,12 +1,13 @@
 
 spring:
   profiles:
-    active: dev
+    active: activemq-dev
 camel:
   springboot:
     shutdown-timeout: 2
 
 ---
+
 spring:
   profiles: mock
 
@@ -17,13 +18,47 @@ toRoute: mock:output
 message: MOCK Environnement
 
 ---
+
+spring:
+  profiles: activemq-dev
+  activemq:
+    brokerUrl: tcp://localhost:61616
+    user: admin
+    password: admin
+
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5431/player1
+#    username: player2
+#    password: player2
+
+
+startRoute: timer:hello?period=10s
+fromRouteFile: file:data/input?delete=true&readLock=none
+#fromRoute: activemq:inputItemQueue
+toRoute: file:data/output
+
+fromRouteActivemq: activemq:inputItemQueue
+toRouteActivemq: log:?level=INFO&showBody=true
+toRouteActivemq1: log:?level=INFO&showBody=false
+
+message: DEV Environnement
+
+
+---
+
 spring:
   profiles: dev
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5431/player1
-    username: player2
-    password: player2
+  activemq:
+    brokerUrl: tcp://localhost:61616
+    user: admin
+    password: admin
+
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5431/player1
+#    username: player2
+#    password: player2
 
 
 startRoute: timer:hello?period=10s
@@ -32,14 +67,17 @@ toRoute: file:data/output
 
 message: DEV Environnement
 
+
+
 ---
+
 spring:
   profiles: stage
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5431/localDB
-    username: player2
-    password: player2
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5431/localDB
+#    username: player2
+#    password: player2
 
 startRoute: timer:hello?period=10s
 fromRoute: file:data/input?delete=true&readLock=none
@@ -50,11 +88,11 @@ message: STAGE Environnement
 ---
 spring:
   profiles: prod
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5431/localDB
-    username: player2
-    password: player2
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5431/localDB
+#    username: player2
+#    password: player2
 
 startRoute: timer:hello?period=10s
 fromRoute: file:data/input?delete=true&readLock=none

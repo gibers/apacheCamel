@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * Created by z001qgd on 1/24/18.
  */
 @Component
-public class SimpleCamelRoute  extends RouteBuilder{
+public class ActivemqCamelRoute extends RouteBuilder{
 
     @Autowired
     Environment environment;
@@ -17,9 +17,11 @@ public class SimpleCamelRoute  extends RouteBuilder{
     @Override
     public void configure() throws Exception {
 
-        from("{{fromRouteFile}}")
+        from("{{fromRouteActivemq}}")
                 .log("timer invoked and the body " + environment.getProperty("message"))
-            .to("{{toRoute}}");
+                .log("read the body => ${body}")
+            .to("{{toRouteActivemq}}")
+            .to("{{toRouteActivemq1}}");
 
 //        from("{{startRoute}}")
 //                .log("Timer Invoked and the body" + environment.getProperty("message"))
