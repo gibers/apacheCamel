@@ -1,6 +1,9 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+data/
+logs/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -24,6 +27,10 @@
 /.nb-gradle/
 /build/
 /*.log
+
 Supprimerait data/input/
 /data/
 /myApp.log
+=======
+
+
